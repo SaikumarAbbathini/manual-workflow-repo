@@ -1,0 +1,26 @@
+name: Manual Trigger Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: false
+        default: 'dev'
+        type: string
+      version:
+        description: 'Version tag to deploy'
+        required: true
+        type: string
+
+jobs:
+  manual-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Output User Inputs
+        run: |
+          echo "Selected Environment: ${{ github.event.inputs.environment }}"
+          echo "Deployment Version: ${{ github.event.inputs.version }}"
